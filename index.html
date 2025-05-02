@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Button Animation with Local Storage</title>
+  <style>
+    /* Define the animation */
+    @keyframes scaleUp {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Style the button */
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 5px;
+      transition: transform 0.3s ease;
+    }
+
+    /* Add animation on hover */
+    button.animated:hover {
+      animation: scaleUp 0.3s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <button id="myButton">Click Me to Toggle Animation</button>
+
+  <script>
+    // JavaScript to manage localStorage and apply animation
+    window.onload = function() {
+      const button = document.getElementById('myButton');
+      
+      // Retrieve stored preference
+      let animationEnabled = localStorage.getItem('animationEnabled');
+      
+      // If no preference is stored, assume animation is enabled
+      if (animationEnabled === null) {
+        animationEnabled = 'true';
+        localStorage.setItem('animationEnabled', 'true');
+      }
+
+      // Apply or remove animation class based on the preference
+      if (animationEnabled === 'false') {
+        button.classList.remove('animated');
+      } else {
+        button.classList.add('animated');
+      }
+
+      // Toggle animation preference on button click
+      button.addEventListener('click', function() {
+        animationEnabled = (animationEnabled === 'true' ? 'false' : 'true');
+        
+        // Store the new preference
+        localStorage.setItem('animationEnabled', animationEnabled);
+
+        // Toggle the class based on preference
+        if (animationEnabled === 'false') {
+          button.classList.remove('animated');
+        } else {
+          button.classList.add('animated');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
